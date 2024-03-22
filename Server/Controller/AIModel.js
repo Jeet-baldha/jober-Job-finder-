@@ -1,6 +1,8 @@
+import dotenv from 'dotenv'
+dotenv.config();
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI("AIzaSyBXCeOvb-LgnC0xoJbJsHJI9dQU-UoFM74");
+const genAI = new GoogleGenerativeAI(process.env.GOOGLEGENERAtTIVEAI_API_KEY);
 
 const resumeSchema = JSON.stringify({
     'resume': {
