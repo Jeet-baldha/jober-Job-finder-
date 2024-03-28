@@ -1,10 +1,7 @@
-import dotenv from 'dotenv'
-dotenv.config();
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import mongoose, { model } from 'mongoose';
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLEGENERAtTIVEAI_API_KEY);
 
-const resumeSchema = JSON.stringify({
+const resumeShcema = new mongoose.Schema({
     'resume': {
         'personal_info': {
             'name': 'String',
@@ -45,18 +42,8 @@ const resumeSchema = JSON.stringify({
         'skills': ['String'],
         'certifications': ['String']
     }
-});
+})
 
-const getJSONData = async (text) => {
-    // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+const Resume = mongoose.model('resume',resumeShcema);
 
-    const prompt = "Extract name, contact details, education, projects, only specific skills without specify lunguage all of that, and experience from the provided text. Return the data in JSON as a string. If a string contains any date data, convert it into DD-MM-YYYY format. If conversion is not possible, leave it as null. Here is your JSON format:" + resumeSchema + " without enclosing backticks. If there are bullet points, convert them into single-line strings." + text;
-
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text1 = response.text();
-    return text1;
-}
-
-export default getJSONData;
+export default Resume;

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
+import axios from 'axios'
 import '../App.css'
+
 const FileUploadForm = () => {
-    const [isLoading, setIsLoading] = useState(false);
+
+    const [file, setFile] = useState(null);
 
     const handleFileChange = (event) => {
-        console.log(event.target.files[0]);
+        setFile(event.target.files[0]);
     };
 
     const handleDragOver = (event) => {
@@ -14,13 +17,45 @@ const FileUploadForm = () => {
     const handleDrop = (event) => {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
-        // You can handle the dropped file here
-        console.log('File dropped:', file);
+        console.log(file);
+        setFile(file);
     };
 
     const handleDragLeave = (event) => {
         event.preventDefault();
     };
+
+    const uploadFile = async () => {
+        if (!file) {
+            alert('Please select a file.');
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await axios.post('http://localhost:3000/upload/resume', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            console.log(response.data);
+            localStorage.setItem('id', response.data);
+            setFile(null);
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    }
+
+    // Call uploadFile when file changes
+    useEffect(() => {
+        if (file) {
+            uploadFile();
+        }
+    }, [file]);
 
     return (
         <div
