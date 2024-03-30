@@ -1,13 +1,16 @@
 import React, { useState ,useEffect} from 'react';
 import axios from 'axios'
 import '../App.css'
+import Loader from './loader/Loader';
 
 const FileUploadForm = () => {
 
     const [file, setFile] = useState(null);
+    const [isLoading,setIsLoading] = useState(false);
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
+        event.preventDefault();
     };
 
     const handleDragOver = (event) => {
@@ -34,7 +37,7 @@ const FileUploadForm = () => {
         try {
             const formData = new FormData();
             formData.append('file', file);
-
+            setIsLoading(true);
             const response = await axios.post('http://localhost:3000/upload/resume', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -45,17 +48,30 @@ const FileUploadForm = () => {
             localStorage.setItem('id', response.data);
             setFile(null);
 
+            setIsLoading(false);
+
         } catch (error) {
             console.error('Error uploading file:', error);
         }
     }
+
+    useEffect(() => {
+
+        if(isLoading){
+            document.body.style.overflow = 'hidden'; 
+        }
+        else{
+            document.body.style.overflow = 'auto'; 
+        }
+
+    },[isLoading])
 
     // Call uploadFile when file changes
     useEffect(() => {
         if (file) {
             uploadFile();
         }
-    }, [file]);
+    }, [file,]);
 
     return (
         <div
@@ -82,6 +98,8 @@ const FileUploadForm = () => {
                     style={{ display: 'none' }} // Hiding the file input
                 />
             </label>
+
+            { isLoading && <Loader />}
         </div>
     );
 };

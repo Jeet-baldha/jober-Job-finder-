@@ -1,5 +1,4 @@
 import * as pdfjsLib from 'pdfjs-dist';
-
 import getJSONData from '../Controller/AIModel.js'; // Make sure the path is correct
 
 const getPdfData = async (data) => {

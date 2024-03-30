@@ -5,6 +5,7 @@ import multer from 'multer';
 import uploadResume from './Controller/api/uploadResume.js';
 import cors from 'cors'
 import mongoose from 'mongoose';
+import getJobs from './Controller/api/getJobs.js';
 const app = express();
 app.use(cors());
 const PORT = 3000;
@@ -33,6 +34,12 @@ const data = new Uint8Array(fs.readFileSync(filePath));
 
 
 app.post('/upload/resume', upload.single('file'),uploadResume);
+
+app.get('/job',async (req, res) => {
+    console.log(await getJobs());
+    res.send(await getJobs());
+
+})
 
 app.listen(PORT, (req, res) => {
     console.log('listening on port ' + PORT);
