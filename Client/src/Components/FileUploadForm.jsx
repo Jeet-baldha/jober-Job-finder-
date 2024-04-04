@@ -2,11 +2,14 @@ import React, { useState ,useEffect} from 'react';
 import axios from 'axios'
 import '../App.css'
 import Loader from './loader/Loader';
+import RoleAskingPopup from './RoleAskingPopup';
 
 const FileUploadForm = () => {
 
     const [file, setFile] = useState(null);
     const [isLoading,setIsLoading] = useState(false);
+    const [activePopup,SetActivePopup] = useState(false);
+    
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -44,10 +47,15 @@ const FileUploadForm = () => {
                 }
             });
 
-            console.log(response.data);
-            localStorage.setItem('id', response.data);
-            setFile(null);
+            console.log(response);
 
+            if(response.status === 200){
+                console.log(response.data);
+                localStorage.setItem('ResumeId', response.data);
+                SetActivePopup(true);
+                console.log(activePopup)
+            }
+            setFile(null);
             setIsLoading(false);
 
         } catch (error) {
@@ -55,9 +63,39 @@ const FileUploadForm = () => {
         }
     }
 
+    const getJobs = async (userRole) => {
+
+        if(userRole === "" || userRole === " "){
+            alert("Please Select Role");
+
+        }else{
+
+            SetActivePopup(false);
+            setIsLoading(true);
+            try {
+                const encodedString = userRole.replace(/ /g, '%20');
+                const response = await axios.get(`http://localhost:3000/job?role=${encodedString}`);
+
+                if(response.status === 200){
+                    console.log(response.data.data);
+                }
+                else{
+                    console.log(response);
+                }
+
+                setIsLoading(false);
+
+            } catch (error) {
+                console.log(error);
+            }
+            
+
+        }
+    }
+
     useEffect(() => {
 
-        if(isLoading){
+        if(isLoading || activePopup){
             document.body.style.overflow = 'hidden'; 
         }
         else{
@@ -100,6 +138,7 @@ const FileUploadForm = () => {
             </label>
 
             { isLoading && <Loader />}
+            { activePopup && <RoleAskingPopup   getJobs={getJobs} />}
         </div>
     );
 };

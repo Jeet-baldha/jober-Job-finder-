@@ -10,7 +10,7 @@ const uploadResume = async (req,res) => {
     const result = JSON.parse(await getPdfData(data));
     const resume = new Resume(result);
     const response = await resume.save();
-    res.status(200).send(result);
+    res.status(200).send(response._id);
 }
 
 export default uploadResume;

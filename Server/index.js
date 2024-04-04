@@ -36,9 +36,10 @@ const data = new Uint8Array(fs.readFileSync(filePath));
 app.post('/upload/resume', upload.single('file'),uploadResume);
 
 app.get('/job',async (req, res) => {
-    console.log(await getJobs());
-    res.send(await getJobs());
 
+    const role = req.query.role;
+    const decodedString = role.replace(/%20/g, ' ');
+    res.send(await getJobs(decodedString));
 })
 
 app.listen(PORT, (req, res) => {

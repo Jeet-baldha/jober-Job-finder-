@@ -3,14 +3,14 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 
-const getJobs = async (query) => {
+const getJobs = async (role) => {
 
 
     const options = {
         method: 'GET',
         url: 'https://jsearch.p.rapidapi.com/search',
         params: {
-            query: 'Python developer in India',
+            query: `${role} in India`,
             page: '1',
             num_pages: '1'
         },
