@@ -6,6 +6,8 @@ import uploadResume from './Controller/api/uploadResume.js';
 import cors from 'cors'
 import mongoose from 'mongoose';
 import getJobs from './Controller/api/getJobs.js';
+import Resume from './Model/resume.js';
+import matchJob from './Controller/JobMatchingAlgo/JobMatch.js';
 const app = express();
 app.use(cors());
 const PORT = 3000;
@@ -38,8 +40,16 @@ app.post('/upload/resume', upload.single('file'),uploadResume);
 app.get('/job',async (req, res) => {
 
     const role = req.query.role;
+    const resumeID = "660f1b7cd48844323457e32f";
     const decodedString = role.replace(/%20/g, ' ');
-    res.send(await getJobs(decodedString));
+    const resume = await Resume.findById(resumeID);
+
+    const JobList = await getJobs(decodedString);
+    // console.log(JobList.data);
+
+    const matchedJobList = matchJob(resume.resume,JobList.data);
+
+    res.send(matchedJobList);
 })
 
 app.listen(PORT, (req, res) => {

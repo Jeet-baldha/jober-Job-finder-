@@ -9,6 +9,7 @@ const uploadResume = async (req,res) => {
     const data = new Uint8Array(fs.readFileSync(filePath));
     const result = JSON.parse(await getPdfData(data));
     const resume = new Resume(result);
+    console.log(resume);
     const response = await resume.save();
     res.status(200).send(response._id);
 }

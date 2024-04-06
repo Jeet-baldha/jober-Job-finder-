@@ -4,7 +4,7 @@ import '../App.css'
 import Loader from './loader/Loader';
 import RoleAskingPopup from './RoleAskingPopup';
 
-const FileUploadForm = () => {
+const FileUploadForm = ({setJobList}) => {
 
     const [file, setFile] = useState(null);
     const [isLoading,setIsLoading] = useState(false);
@@ -77,7 +77,10 @@ const FileUploadForm = () => {
                 const response = await axios.get(`http://localhost:3000/job?role=${encodedString}`);
 
                 if(response.status === 200){
-                    console.log(response.data.data);
+                    console.log(response.data);
+                    console.log(typeof(setJobList));
+                    setJobList(response.data);
+
                 }
                 else{
                     console.log(response);
