@@ -51,7 +51,8 @@ const getJSONData = async (text) => {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = "Extract name, contact details, education, projects, only specific skills without specify lunguage all of that, and experience from the provided text. Return the data in JSON as a string. If a string contains any date data, convert it into DD-MM-YYYY format. If conversion is not possible, leave it as null. Here is your JSON format:" + resumeSchema + " without enclosing backticks. If there are bullet points, convert them into single-line strings. and all character are in lowercase" + text;
+    const prompt = "Extract name, contact details, education, projects, only specific skills without specify lunguage all of that, and experience from the provided text. Return the data in JSON as a string. If conversion is not possible, leave it as null. Here is your JSON format:" + resumeSchema + " without enclosing backticks. If there are bullet points, convert them into single-line strings." + text;
+
 
     const result = await model.generateContent(prompt);
     const response = result.response;

@@ -1,26 +1,31 @@
 import mactchSkill from "./SkillMatch.js";
+import findExprerience from "./findExpreince.js";
 
-const matchJob = (resume, jobList) =>{
+const matchJob =async (resume, jobList) =>{
+    
+    // let jobScores = [];
+    const totalMonthOfExperience = findExprerience(resume.experience);
 
-    let jobScores = [];
-
-    jobList.map(job => (
-        jobScores.push( mactchSkill(resume.skills,job))
-    ))
+    const jobScores = await Promise.all(jobList.map(async (job) => {
+        const res = await mactchSkill(resume, job, totalMonthOfExperience);
+        return res;
+    }));
+    
 
     jobScores.sort((a, b) => b.score - a.score);
 
 
-    // console.log(jobScores);
+    console.log(jobScores);
 
     let matchedJobs = [];
     jobScores.forEach(({ jobId, score }) => {
         const matchedJob = jobList.find(job => job.job_id === jobId);
-        if (matchedJob) {
+        if (matchedJob && score >= 1) {
             matchedJobs.push(matchedJob); // Include score along with job details
         }
     });
 
+    
     // console.log(matchedJobs);
     return matchedJobs;
 

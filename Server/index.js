@@ -40,14 +40,15 @@ app.post('/upload/resume', upload.single('file'),uploadResume);
 app.get('/job',async (req, res) => {
 
     const role = req.query.role;
-    const resumeID = "660f1b7cd48844323457e32f";
+    const resumeID = req.headers.resumeid;
+    console.log(resumeID);
     const decodedString = role.replace(/%20/g, ' ');
     const resume = await Resume.findById(resumeID);
 
     const JobList = await getJobs(decodedString);
     // console.log(JobList.data);
 
-    const matchedJobList = matchJob(resume.resume,JobList.data);
+    const matchedJobList = await matchJob(resume.resume,JobList.data);
 
     res.send(matchedJobList);
 })

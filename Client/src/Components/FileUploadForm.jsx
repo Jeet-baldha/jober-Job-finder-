@@ -74,7 +74,8 @@ const FileUploadForm = ({setJobList}) => {
             setIsLoading(true);
             try {
                 const encodedString = userRole.replace(/ /g, '%20');
-                const response = await axios.get(`http://localhost:3000/job?role=${encodedString}`);
+                console.log(localStorage.getItem('ResumeId'))
+                const response = await axios.get(`http://localhost:3000/job?role=${encodedString}`,{headers:{'resumeid':localStorage.getItem('ResumeId')}});
 
                 if(response.status === 200){
                     console.log(response.data);
@@ -83,7 +84,7 @@ const FileUploadForm = ({setJobList}) => {
 
                 }
                 else{
-                    console.log(response);
+                    console.log(response.data);
                 }
 
                 setIsLoading(false);
