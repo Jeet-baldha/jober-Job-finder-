@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 
-const getJobs = async (role) => {
+const getJobs = async (role,page) => {
 
 
     const options = {
@@ -11,7 +11,7 @@ const getJobs = async (role) => {
         url: 'https://jsearch.p.rapidapi.com/search',
         params: {
             query: `${role} in India`,
-            page: '1',
+            page: String(page) || '1',
             num_pages: '1'
         },
         headers: {
@@ -25,7 +25,7 @@ const getJobs = async (role) => {
         return (response.data);
     } catch (error) {
         console.error(error);
-        return error;
+        return (null);
     }
 
 }

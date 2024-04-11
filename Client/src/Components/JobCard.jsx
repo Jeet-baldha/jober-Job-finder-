@@ -39,7 +39,7 @@ function JobCard({job}) {
                 <div className=' py-5 ' >
                     <p className=' text-lg text-justify'>Create intuitive, visually appealing interfaces for optimal user experience.</p>
                     <div className=' flex rounded-lg mt-5 w-full bg-slate-200 items-center gap-10'>
-                        {job.employer_logo ? <img src={job.employer_logo} className=' w-14 aspect-auto'></img> : <img src='https://pngimg.com/uploads/google/google_PNG19635.png' className=' w-14 aspect-square'></img>}
+                        {job.employer_logo ? <img src={job.employer_logo} className=' w-14 aspect-auto'></img> : <img src='https://qplexus.com/wp-content/uploads/2016/02/default-logo.png' className=' w-14 aspect-square'></img>}
                         <h1 className=' text-lg text-black font-semibold'> {job.employer_name}</h1>
                     </div>
                 </div>

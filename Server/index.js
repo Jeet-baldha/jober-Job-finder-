@@ -41,14 +41,20 @@ app.get('/job',async (req, res) => {
 
     const role = req.query.role;
     const resumeID = req.headers.resumeid;
-    console.log(resumeID);
+    const page = req.headers.page;
+    // console.log(req.headers);
     const decodedString = role.replace(/%20/g, ' ');
     const resume = await Resume.findById(resumeID);
 
-    const JobList = await getJobs(decodedString);
-    // console.log(JobList.data);
+    const JobList = await getJobs(decodedString,page);
+    let matchedJobList = [];
 
-    const matchedJobList = await matchJob(resume.resume,JobList.data);
+    if(JobList != null && JobList.data.length > 0){
+
+        matchedJobList = await matchJob(resume.resume,JobList.data);
+    }
+
+
 
     res.send(matchedJobList);
 })

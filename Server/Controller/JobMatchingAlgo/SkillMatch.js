@@ -45,7 +45,7 @@ const mactchSkill = async (resume,job,totalMonthOfExperience) => {
             score -= 5;
         }
         else{
-            return {jobId:job.job_id,score:score}
+            return {jobId:job.job_id,score:0}
         }
         
     }
@@ -56,7 +56,10 @@ const mactchSkill = async (resume,job,totalMonthOfExperience) => {
     console.log( "bedore " + score)
 
     if(skills.length > 0){
-        const result = skills.filter(skill => jobDescription.includes(skill.toLowerCase()));   
+        const result = skills.filter(skill => jobDescription.includes(skill.toLowerCase()));  
+        if(result.length <= 0){
+            return {jobId:job.job_id,score:0}
+        } 
         console.log(result);
         score += result.length;
     }

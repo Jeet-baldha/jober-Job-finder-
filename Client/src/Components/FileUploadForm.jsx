@@ -3,12 +3,16 @@ import axios from 'axios'
 import '../App.css'
 import Loader from './loader/Loader';
 import RoleAskingPopup from './RoleAskingPopup';
+import { setUser } from '../Store/userSlice';
+import { useDispatch } from 'react-redux';
 
 const FileUploadForm = ({setJobList}) => {
 
     const [file, setFile] = useState(null);
     const [isLoading,setIsLoading] = useState(false);
     const [activePopup,SetActivePopup] = useState(false);
+    const [resumeId,setResumeId] = useState(null)
+    const dispatch = useDispatch();
     
 
     const handleFileChange = (event) => {
@@ -52,6 +56,7 @@ const FileUploadForm = ({setJobList}) => {
             if(response.status === 200){
                 console.log(response.data);
                 localStorage.setItem('ResumeId', response.data);
+                setResumeId(response.data);
                 SetActivePopup(true);
                 console.log(activePopup)
             }
@@ -75,11 +80,11 @@ const FileUploadForm = ({setJobList}) => {
             try {
                 const encodedString = userRole.replace(/ /g, '%20');
                 console.log(localStorage.getItem('ResumeId'))
-                const response = await axios.get(`http://localhost:3000/job?role=${encodedString}`,{headers:{'resumeid':localStorage.getItem('ResumeId')}});
+                const response = await axios.get(`http://localhost:3000/job?role=${encodedString}`,{headers:{'resumeid':localStorage.getItem('ResumeId'),'page':1}});
 
                 if(response.status === 200){
                     console.log(response.data);
-                    console.log(typeof(setJobList));
+                    dispatch(setUser({resumeId,userRole}));
                     setJobList(response.data);
 
                 }

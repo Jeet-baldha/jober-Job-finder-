@@ -20,7 +20,7 @@ const matchJob =async (resume, jobList) =>{
     let matchedJobs = [];
     jobScores.forEach(({ jobId, score }) => {
         const matchedJob = jobList.find(job => job.job_id === jobId);
-        if (matchedJob && score >= 1) {
+        if (matchedJob && score >= 3 ) {
             matchedJobs.push(matchedJob); // Include score along with job details
         }
     });
@@ -31,4 +31,4 @@ const matchJob =async (resume, jobList) =>{
 
 }
 
-export default matchJob;
+export default matchJob; 
