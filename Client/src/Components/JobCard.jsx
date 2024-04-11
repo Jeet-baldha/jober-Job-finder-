@@ -27,23 +27,25 @@ function JobCard({job}) {
 
     return (
         <div className=' bg-zinc-100 p-5 rounded-lg shadow-lg duration-300  hover:bg-blend-lighten  w-72 hover:bg-primary hover:text-white hover:cursor-pointer group hover:shadow-primary hover:shadow-2xl'>
-            <div className=' pb-5'>
-                <div className=' flex justify-between'>
-                    <h1 className=' text-lg font-bold'>{job.job_title}</h1>
-                    <p className=' opacity-70 flex items-center'><IoTime className=' inline-block'/>{calculateHourDifference(job.job_posted_at_datetime_utc)}</p>
+            <a href={job.job_apply_link} target='_blank'>
+                <div className=' pb-5'>
+                    <div className=' flex justify-between'>
+                        <h1 className=' text-lg font-bold'>{job.job_title}</h1>
+                        <p className=' opacity-70 flex items-center'><IoTime className=' inline-block'/>{calculateHourDifference(job.job_posted_at_datetime_utc)}</p>
+                    </div>
+                    <p>{job.job_is_remote ? "Remote" :job.job_city}</p>
                 </div>
-                <p>{job.job_is_remote ? "Remote" :job.job_city}</p>
-            </div>
-            <hr></hr>
-            <div className=' py-5 ' >
-                <p className=' text-lg text-justify'>Create intuitive, visually appealing interfaces for optimal user experience.</p>
-                <div className=' flex rounded-lg mt-5 w-full bg-slate-200 items-center gap-10'>
-                    {job.employer_logo ? <img src={job.employer_logo} className=' w-14 aspect-auto'></img> : <img src='https://pngimg.com/uploads/google/google_PNG19635.png' className=' w-14 aspect-square'></img>}
-                    <h1 className=' text-lg text-black font-semibold'> {job.employer_name}</h1>
+                <hr></hr>
+                <div className=' py-5 ' >
+                    <p className=' text-lg text-justify'>Create intuitive, visually appealing interfaces for optimal user experience.</p>
+                    <div className=' flex rounded-lg mt-5 w-full bg-slate-200 items-center gap-10'>
+                        {job.employer_logo ? <img src={job.employer_logo} className=' w-14 aspect-auto'></img> : <img src='https://pngimg.com/uploads/google/google_PNG19635.png' className=' w-14 aspect-square'></img>}
+                        <h1 className=' text-lg text-black font-semibold'> {job.employer_name}</h1>
+                    </div>
                 </div>
-            </div>
-            <hr></hr>
-            <button className=' w-full rounded-lg mt-5 bg-primary text-white text-2xl font-bold p-2 group-hover:bg-white group-hover:text-primary'>Apply Now</button>
+                <hr></hr>
+                <button className=' w-full rounded-lg mt-5 bg-primary text-white text-2xl font-bold p-2 group-hover:bg-white group-hover:text-primary'>Apply Now</button>
+            </a>
         </div>
     )
 }

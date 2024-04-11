@@ -13,8 +13,6 @@ const findRequiredExperience =async (jobDescription) => {
     const result = await model.generateContent(prompt);
     const response = result.response;
     const text1 = response.text();
-    console.log(text1);
-
     return text1;
 
 }

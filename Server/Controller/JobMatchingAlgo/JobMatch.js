@@ -1,10 +1,10 @@
 import mactchSkill from "./SkillMatch.js";
-import findExprerience from "./findExpreince.js";
+import findExperience from "./findExpreince.js";
 
 const matchJob =async (resume, jobList) =>{
     
     // let jobScores = [];
-    const totalMonthOfExperience = findExprerience(resume.experience);
+    const totalMonthOfExperience = findExperience(resume.experience);
 
     const jobScores = await Promise.all(jobList.map(async (job) => {
         const res = await mactchSkill(resume, job, totalMonthOfExperience);

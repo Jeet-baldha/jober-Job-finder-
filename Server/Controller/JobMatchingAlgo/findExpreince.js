@@ -1,5 +1,5 @@
 
-const findExprerience = (experience) => {
+const findExperience = (experience) => {
     let totalMonthOfExperience = 0;
 
     if (experience.length > 0) {
@@ -15,21 +15,17 @@ const findExprerience = (experience) => {
                 totalMonth = (totalYear - 1) * 12; 
                 totalMonth += (12 - stDate.getMonth() - 1); 
                 totalMonth += enDate.getMonth() + 1;
-                console.log(totalMonth)
             } else {
                 totalMonth = enDate.getMonth() - stDate.getMonth();
-                console.log(totalMonth);
             }
     
             totalMonthOfExperience += totalMonth + 1;
         });
     }
     
-    console.log("Total months of experience: " + totalMonthOfExperience);
-    
     return totalMonthOfExperience;
 
 }
 
 
-export default findExprerience; 
+export default findExperience; 
